@@ -1,0 +1,91 @@
+Traceback (most recent call last):
+  File "DCGAN.py", line 9, in <module>
+    import matplotlib.pyplot as plt
+  File "/home/knl/anaconda3/lib/python3.6/site-packages/matplotlib/pyplot.py", line 32, in <module>
+    import matplotlib.colorbar
+  File "/home/knl/anaconda3/lib/python3.6/site-packages/matplotlib/colorbar.py", line 32, in <module>
+    import matplotlib.contour as contour
+  File "/home/knl/anaconda3/lib/python3.6/site-packages/matplotlib/contour.py", line 19, in <module>
+    import matplotlib.text as text
+  File "/home/knl/anaconda3/lib/python3.6/site-packages/matplotlib/text.py", line 1276, in <module>
+    docstring.interpd.update(Text=artist.kwdoc(Text))
+  File "/home/knl/anaconda3/lib/python3.6/site-packages/matplotlib/artist.py", line 1537, in kwdoc
+    leadingspace=2))
+  File "/home/knl/anaconda3/lib/python3.6/site-packages/matplotlib/artist.py", line 1285, in pprint_setters
+    attrs = self._get_setters_and_targets()
+  File "/home/knl/anaconda3/lib/python3.6/site-packages/matplotlib/artist.py", line 1192, in _get_setters_and_targets
+    nargs = len(inspect.getfullargspec(func).args)
+  File "/home/knl/anaconda3/lib/python3.6/inspect.py", line 1116, in getfullargspec
+    sigcls=Signature)
+  File "/home/knl/anaconda3/lib/python3.6/inspect.py", line 2258, in _signature_from_callable
+    return _signature_from_function(sigcls, obj)
+  File "/home/knl/anaconda3/lib/python3.6/inspect.py", line 2170, in _signature_from_function
+    __validate_parameters__=is_duck_function)
+  File "/home/knl/anaconda3/lib/python3.6/inspect.py", line 2756, in __init__
+    for param in parameters))
+  File "/home/knl/anaconda3/lib/python3.6/inspect.py", line 2755, in <genexpr>
+    params = OrderedDict(((param.name, param)
+KeyboardInterrupt
+2020-05-26 09:54:57.551639: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcuda.so.1
+2020-05-26 09:54:57.632068: E tensorflow/stream_executor/cuda/cuda_driver.cc:313] failed call to cuInit: CUDA_ERROR_NO_DEVICE: no CUDA-capable device is detected
+2020-05-26 09:54:57.632432: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:156] kernel driver does not appear to be running on this host (knl.gaia.unil.ch): /proc/driver/nvidia/version does not exist
+2020-05-26 09:54:57.634368: I tensorflow/core/platform/cpu_feature_guard.cc:143] Your CPU supports instructions that this TensorFlow binary was not compiled to use: AVX2 AVX512F FMA
+2020-05-26 09:54:57.697579: I tensorflow/core/platform/profile_utils/cpu_utils.cc:102] CPU Frequency: 1300065000 Hz
+2020-05-26 09:54:57.712087: I tensorflow/compiler/xla/service/service.cc:168] XLA service 0x561a0b9efe10 initialized for platform Host (this does not guarantee that XLA will be used). Devices:
+2020-05-26 09:54:57.712342: I tensorflow/compiler/xla/service/service.cc:176]   StreamExecutor device (0): Host, Default Version
+Image shape: (28, 28, 1)
+Traceback (most recent call last):
+  File "DCGAN.py", line 327, in <module>
+    train(iterations, batch_size, sample_interval)
+  File "DCGAN.py", line 244, in train
+    d_loss_real = discriminator.train_on_batch(imgs, real)
+  File "/home/knl/.local/lib/python3.6/site-packages/tensorflow/python/keras/engine/training.py", line 1348, in train_on_batch
+    logs = train_function(iterator)
+  File "/home/knl/.local/lib/python3.6/site-packages/tensorflow/python/eager/def_function.py", line 580, in __call__
+    result = self._call(*args, **kwds)
+  File "/home/knl/.local/lib/python3.6/site-packages/tensorflow/python/eager/def_function.py", line 627, in _call
+    self._initialize(args, kwds, add_initializers_to=initializers)
+  File "/home/knl/.local/lib/python3.6/site-packages/tensorflow/python/eager/def_function.py", line 506, in _initialize
+    *args, **kwds))
+  File "/home/knl/.local/lib/python3.6/site-packages/tensorflow/python/eager/function.py", line 2446, in _get_concrete_function_internal_garbage_collected
+    graph_function, _, _ = self._maybe_define_function(args, kwargs)
+  File "/home/knl/.local/lib/python3.6/site-packages/tensorflow/python/eager/function.py", line 2777, in _maybe_define_function
+    graph_function = self._create_graph_function(args, kwargs)
+  File "/home/knl/.local/lib/python3.6/site-packages/tensorflow/python/eager/function.py", line 2667, in _create_graph_function
+    capture_by_value=self._capture_by_value),
+  File "/home/knl/.local/lib/python3.6/site-packages/tensorflow/python/framework/func_graph.py", line 1022, in func_graph_from_py_func
+    func_graph.variables = variables
+  File "/home/knl/.local/lib/python3.6/site-packages/tensorflow/python/framework/auto_control_deps.py", line 385, in __exit__
+    if (op_is_stateful(op) and not resource_inputs
+  File "/home/knl/.local/lib/python3.6/site-packages/tensorflow/python/framework/auto_control_deps.py", line 124, in op_is_stateful
+    op.type in _WHITELIST_STATELESS_OPS)
+  File "/home/knl/.local/lib/python3.6/site-packages/tensorflow/python/framework/ops.py", line 2221, in type
+    return pywrap_tf_session.TF_OperationOpType(self._c_op)
+KeyboardInterrupt
+2020-05-26 10:13:23.216186: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcuda.so.1
+2020-05-26 10:13:23.311830: E tensorflow/stream_executor/cuda/cuda_driver.cc:313] failed call to cuInit: CUDA_ERROR_NO_DEVICE: no CUDA-capable device is detected
+2020-05-26 10:13:23.312128: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:156] kernel driver does not appear to be running on this host (knl.gaia.unil.ch): /proc/driver/nvidia/version does not exist
+2020-05-26 10:13:23.314058: I tensorflow/core/platform/cpu_feature_guard.cc:143] Your CPU supports instructions that this TensorFlow binary was not compiled to use: AVX2 AVX512F FMA
+2020-05-26 10:13:23.369777: I tensorflow/core/platform/profile_utils/cpu_utils.cc:102] CPU Frequency: 1300065000 Hz
+2020-05-26 10:13:23.373197: I tensorflow/compiler/xla/service/service.cc:168] XLA service 0x5616780b46a0 initialized for platform Host (this does not guarantee that XLA will be used). Devices:
+2020-05-26 10:13:23.373392: I tensorflow/compiler/xla/service/service.cc:176]   StreamExecutor device (0): Host, Default Version
+Image shape: (28, 28, 1)
+Traceback (most recent call last):
+  File "DCGAN.py", line 327, in <module>
+    train(iterations, batch_size, sample_interval)
+  File "DCGAN.py", line 215, in train
+    X_train = create_dataset('Images28x28/Images/*')
+  File "DCGAN.py", line 184, in create_dataset
+    img_ds = np.array(list(img_ds))
+  File "/home/knl/.local/lib/python3.6/site-packages/tensorflow/python/data/ops/dataset_ops.py", line 3725, in __next__
+    return self.next()
+  File "/home/knl/.local/lib/python3.6/site-packages/tensorflow/python/data/ops/dataset_ops.py", line 3722, in next
+    return nest.map_structure(lambda x: x.numpy(), next(self._iterator))
+KeyboardInterrupt
+2020-05-26 10:15:09.996608: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcuda.so.1
+2020-05-26 10:15:10.081076: E tensorflow/stream_executor/cuda/cuda_driver.cc:313] failed call to cuInit: CUDA_ERROR_NO_DEVICE: no CUDA-capable device is detected
+2020-05-26 10:15:10.081437: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:156] kernel driver does not appear to be running on this host (knl.gaia.unil.ch): /proc/driver/nvidia/version does not exist
+2020-05-26 10:15:10.083399: I tensorflow/core/platform/cpu_feature_guard.cc:143] Your CPU supports instructions that this TensorFlow binary was not compiled to use: AVX2 AVX512F FMA
+2020-05-26 10:15:10.161187: I tensorflow/core/platform/profile_utils/cpu_utils.cc:102] CPU Frequency: 1300065000 Hz
+2020-05-26 10:15:10.190262: I tensorflow/compiler/xla/service/service.cc:168] XLA service 0x558ffcf432b0 initialized for platform Host (this does not guarantee that XLA will be used). Devices:
+2020-05-26 10:15:10.190470: I tensorflow/compiler/xla/service/service.cc:176]   StreamExecutor device (0): Host, Default Version
