@@ -132,3 +132,26 @@ KeyboardInterrupt
 2020-05-26 10:49:21.096465: I tensorflow/core/platform/profile_utils/cpu_utils.cc:102] CPU Frequency: 1300065000 Hz
 2020-05-26 10:49:21.125216: I tensorflow/compiler/xla/service/service.cc:168] XLA service 0x562cd5373b80 initialized for platform Host (this does not guarantee that XLA will be used). Devices:
 2020-05-26 10:49:21.125425: I tensorflow/compiler/xla/service/service.cc:176]   StreamExecutor device (0): Host, Default Version
+/home/knl/anaconda3/lib/python3.6/site-packages/matplotlib/pyplot.py:514: RuntimeWarning: More than 20 figures have been opened. Figures created through the pyplot interface (`matplotlib.pyplot.figure`) are retained until explicitly closed and may consume too much memory. (To control this warning, see the rcParam `figure.max_open_warning`).
+  max_open_warning, RuntimeWarning)
+Image shape: (28, 28, 1)
+1000 [D loss: 0.000019, acc.: 100.00%] [G loss: 0.017708]
+2000 [D loss: 0.000003, acc.: 100.00%] [G loss: 0.006040]
+3000 [D loss: 0.000001, acc.: 100.00%] [G loss: 0.004403]
+4000 [D loss: 0.000001, acc.: 100.00%] [G loss: 0.006046]
+5000 [D loss: 0.000000, acc.: 100.00%] [G loss: 0.003612]
+6000 [D loss: 0.000005, acc.: 100.00%] [G loss: 0.003797]
+7000 [D loss: 0.000001, acc.: 100.00%] [G loss: 0.001802]
+8000 [D loss: 0.000000, acc.: 100.00%] [G loss: 0.001067]
+9000 [D loss: 0.000000, acc.: 100.00%] [G loss: 0.000682]
+10000 [D loss: 0.000000, acc.: 100.00%] [G loss: 0.000752]
+11000 [D loss: 0.000000, acc.: 100.00%] [G loss: 0.001046]
+12000 [D loss: 0.000000, acc.: 100.00%] [G loss: 0.005664]
+13000 [D loss: 0.000000, acc.: 100.00%] [G loss: 0.002705]
+14000 [D loss: 0.000000, acc.: 100.00%] [G loss: 0.001588]
+15000 [D loss: 0.000000, acc.: 100.00%] [G loss: 0.001409]
+16000 [D loss: 0.000000, acc.: 100.00%] [G loss: 0.001177]
+17000 [D loss: 0.000000, acc.: 100.00%] [G loss: 0.000758]
+18000 [D loss: 0.000000, acc.: 100.00%] [G loss: 0.000541]
+19000 [D loss: 0.000000, acc.: 100.00%] [G loss: 0.000345]
+20000 [D loss: 0.000000, acc.: 100.00%] [G loss: 0.000453]
