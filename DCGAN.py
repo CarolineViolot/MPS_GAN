@@ -31,7 +31,7 @@ img_shape = (img_rows, img_cols, channels)
 
 # Size of the noise vector, used as input to the Generator
 z_dim = 100
-
+alpha = 0.2
 
 # ## Generator
 
@@ -39,32 +39,35 @@ z_dim = 100
 
 
 def build_generator(z_dim):
-
+ #4 deconvolutional layers
+ 
     model = tf.keras.Sequential()
 
     # Reshape input into 7x7x256 tensor via a fully connected layer
-    model.add(Dense(7*7*256, use_bias = False,input_shape=(z_dim,)))
+    
+    model.add(Dense(7*7*512, use_bias = False,input_shape=(z_dim,)))
     model.add(BatchNormalization())
     model.add(LeakyReLU())
-    model.add(Reshape((7, 7, 256)))
-
-    # Transposed convolution layer, from 7x7x256 into 14x14x128 tensor
-    model.add(Conv2DTranspose(128, kernel_size=3, strides=2, padding='same'))
-
-    # Batch normalization
+    model.add(Reshape((7, 7, 512)))
+    assert model.output_shape == (None, 7, 7, 512)
+    
+    
+    # Transposed convolution layer, from 7x7x512 into 14x14x256 tensor
+    model.add(Conv2DTranspose(256, kernel_size=3, strides=2, padding='same'))
+    assert model.output_shape == (None, 14, 14, 256)
     model.add(BatchNormalization())
+    model.add(LeakyReLU(alpha=0.1))
 
-    # Leaky ReLU activation
-    model.add(LeakyReLU(alpha=0.01))
+    # Transposed convolution layer, from 14x14x256 to 14x14x128 tensor
+    model.add(Conv2DTranspose(128, kernel_size=3, strides=1, padding='same'))
+    assert model.output_shape == (None, 14, 14, 128)
+    model.add(BatchNormalization())
+    model.add(LeakyReLU(alpha=0.1))
 
-    # Transposed convolution layer, from 14x14x128 to 14x14x64 tensor
+    # Transposed convolution layer, from 14x14x128 to 14x14x64
     model.add(Conv2DTranspose(64, kernel_size=3, strides=1, padding='same'))
-
-    # Batch normalization
     model.add(BatchNormalization())
-
-    # Leaky ReLU activation
-    model.add(LeakyReLU(alpha=0.01))
+    model.add(LeakyReLU(alpha=0.1))
 
     # Transposed convolution layer, from 14x14x64 to 28x28x1 tensor
     model.add(Conv2DTranspose(1, kernel_size=3, strides=2, padding='same'))
@@ -85,43 +88,28 @@ def build_discriminator(img_shape):
     model = tf.keras.Sequential()
 
     # Convolutional layer, from 28x28x1 into 14x14x32 tensor
-    model.add(
-        Conv2D(32,
-               kernel_size=3,
-               strides=2,
-               input_shape=img_shape,
-               padding='same'))
-
+    model.add(Conv2D(32,kernel_size=3,strides=2,input_shape=img_shape,padding='same'))
+    
     # Leaky ReLU activation
-    model.add(LeakyReLU(alpha=0.01))
+    model.add(LeakyReLU(alpha=0.1))
 
     # Convolutional layer, from 14x14x32 into 7x7x64 tensor
-    model.add(
-        Conv2D(64,
-               kernel_size=3,
-               strides=2,
-               input_shape=img_shape,
-               padding='same'))
+    model.add(Conv2D(64,kernel_size=3,strides=2,input_shape=img_shape,padding='same'))
 
     # Batch normalization
     model.add(BatchNormalization())
 
     # Leaky ReLU activation
-    model.add(LeakyReLU(alpha=0.01))
+    model.add(LeakyReLU(alpha=0.1))
 
     # Convolutional layer, from 7x7x64 tensor into 3x3x128 tensor
-    model.add(
-        Conv2D(128,
-               kernel_size=3,
-               strides=2,
-               input_shape=img_shape,
-               padding='same'))
+    model.add(Conv2D(128,kernel_size=3,strides=2,input_shape=img_shape,padding='same'))
 
     # Batch normalization
     model.add(BatchNormalization())
 
     # Leaky ReLU activation
-    model.add(LeakyReLU(alpha=0.01))
+    model.add(LeakyReLU(alpha=0.1))
     # Output layer with sigmoid activation
     model.add(Flatten())
     model.add(Dense(1, activation='sigmoid'))
@@ -218,7 +206,7 @@ def train(iterations, batch_size, sample_interval):
     #X_train = X_train.reshape(len(X_train), img_size*img_size)
 
     # Rescale [0, 255] grayscale pixel values to [-1, 1]
-    X_train = X_train / 127.5 - 1.0
+    #X_train = X_train / 127.5 - 1.0
     #X_train = np.expand_dims(X_train, axis=3)
 
     # Labels for real images: all ones
