@@ -308,9 +308,9 @@ def sample_images(generator,iteration, image_grid_rows=4, image_grid_columns=4 )
 
 
 # Set hyperparameters
-iterations = 2000
+iterations = 25000
 batch_size = 128
-sample_interval = 100
+sample_interval = 1000
 
 # Train the DCGAN for the specified number of iterations
 train(iterations, batch_size, sample_interval)
