@@ -12,7 +12,7 @@ import numpy as np
 from tensorflow.keras.layers import Activation, BatchNormalization, Dense, Dropout, Flatten, Reshape
 from tensorflow.keras.layers import LeakyReLU
 from tensorflow.keras.layers import Conv2D, Conv2DTranspose
-from tensorflow.keras.models import Sequential
+
 from tensorflow.keras.optimizers import Adam
 
 import tensorflow as tf
@@ -40,10 +40,12 @@ z_dim = 100
 
 def build_generator(z_dim):
 
-    model = Sequential()
+    model = tf.keras.Sequential()
 
     # Reshape input into 7x7x256 tensor via a fully connected layer
-    model.add(Dense(256 * 7 * 7, input_dim=z_dim))
+    model.add(Dense(7*7*256, use_bias = False,input_shape=(z_dim,)))
+    model.add(BatchNormalization())
+    model.add(LeakyReLU())
     model.add(Reshape((7, 7, 256)))
 
     # Transposed convolution layer, from 7x7x256 into 14x14x128 tensor
@@ -80,7 +82,7 @@ def build_generator(z_dim):
 
 def build_discriminator(img_shape):
 
-    model = Sequential()
+    model = tf.keras.Sequential()
 
     # Convolutional layer, from 28x28x1 into 14x14x32 tensor
     model.add(
@@ -120,7 +122,6 @@ def build_discriminator(img_shape):
 
     # Leaky ReLU activation
     model.add(LeakyReLU(alpha=0.01))
-
     # Output layer with sigmoid activation
     model.add(Flatten())
     model.add(Dense(1, activation='sigmoid'))
@@ -135,7 +136,7 @@ def build_discriminator(img_shape):
 
 def build_gan(generator, discriminator):
 
-    model = Sequential()
+    model = tf.keras.Sequential()
 
     # Combined Generator -> Discriminator model
     model.add(generator)
@@ -293,7 +294,7 @@ def sample_images(generator,iteration, image_grid_rows=4, image_grid_columns=4 )
         plt.imshow(gen_imgs[i].squeeze(), interpolation='nearest', cmap='gray_r')
         plt.axis('off')
     plt.tight_layout()
-    plt.savefig('DCGAN_generated_images/gan_generated_image_epoch_%d.png' % (iteration))
+    plt.savefig('DCGAN_generated_images/gan_generated_image_epoch_%d.png' % (iteration+1))
     """
     fig, axs = plt.subplots(image_grid_rows,
                             image_grid_columns,
