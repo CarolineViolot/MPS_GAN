@@ -206,7 +206,7 @@ def train(iterations, batch_size, sample_interval):
     #X_train = X_train.reshape(len(X_train), img_size*img_size)
 
     # Rescale [0, 255] grayscale pixel values to [-1, 1]
-    #X_train = X_train / 127.5 - 1.0
+    X_train = X_train / 127.5 - 1.0
     #X_train = np.expand_dims(X_train, axis=3)
 
     # Labels for real images: all ones
