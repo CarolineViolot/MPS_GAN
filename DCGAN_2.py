@@ -28,7 +28,7 @@ def get_dataloader(batch_size, image_size, data_dir='Images64x64/'):
     :return: DataLoader with batched data
     """
     dataset = dset.ImageFolder(root=data_dir,
-                               transform=transforms.Compose([
+                               transform=transforms.Compose([transforms.Grayscale(), 
                                    transforms.Resize(image_size),
                                    transforms.ToTensor(),
                                ]))
@@ -48,22 +48,21 @@ img_size = 64
 train_loader = get_dataloader(batch_size, img_size)
 
 
-# helper display function
-def imshow(img):
-    npimg = img.numpy()
-    plt.imshow(np.transpose(npimg, (1, 2, 0)))
 
 # obtain one batch of training images
 dataiter = iter(train_loader)
 images, _ = dataiter.next() # _ for no labels
 
+
+
 # plot the images in the batch, along with the corresponding labels
-fig = plt.figure(figsize=(16, 4))
+fig = plt.figure(figsize=(10, 10))
 plot_size=16
 for idx in np.arange(plot_size):
     
-    ax = fig.add_subplot(2, plot_size/2, idx+1, xticks=[], yticks=[])
-    imshow(images[idx])
+    ax = fig.add_subplot(4, plot_size/4, idx+1, xticks=[], yticks=[])
+    print(images[idx].shape)
+    plt.imshow(images[idx].reshape(64, 64))
 
 
 #%%
@@ -145,7 +144,7 @@ class Discriminator(nn.Module):
         super(Discriminator, self).__init__()
         self.conv_dim = conv_dim
         # first layer : input 32 x 32 with no batch norm
-        self.conv1 = make_conv(3, conv_dim, 4, batch_norm=False)
+        self.conv1 = make_conv(1, conv_dim, 4, batch_norm=False)
         # second layer : input 16 x 16 with batch norm
         self.conv2 = make_conv(conv_dim , conv_dim*2, 4)
         # third layer : input 8 x  8 with batch norm 
@@ -234,7 +233,7 @@ class Generator(nn.Module):
         # third convolutional layer : input 8 x 8 
         self.tconv3 = make_tconv(conv_dim*2, conv_dim, 4)
         # last convolutional layer : output 32 x 32 x 3 
-        self.tconv4 = make_tconv(conv_dim, 3, 4, batch_norm=False)
+        self.tconv4 = make_tconv(conv_dim, 1, 4, batch_norm=False)
         
         
         
@@ -527,7 +526,7 @@ def train(D, G, n_epochs, print_every=50):
                 samples_z = G(z)
                 G.train() # back to training mode
                 img = samples_z.detach().cpu().numpy()
-                img = img.reshape(32,32,3)
+                img = img.reshape(32,32)
                 plt.figure(figsize=(10,10))
                 plt.imshow(img)#.squeeze())#, interpolation='nearest')#, cmap='gray_r')
                 plt.axis('off')
@@ -594,7 +593,7 @@ def view_samples(epoch, samples):
         img = ((img + 1)*255 / (2)).astype(np.uint8)
         ax.xaxis.set_visible(False)
         ax.yaxis.set_visible(False)
-        im = ax.imshow(img.reshape((32,32,3)))
+        im = ax.imshow(img.reshape(32,32))
     plt.savefig('DCGAN2_generated_images/gan_generated_image_epoch_%d.png' % (epoch+1))
     
     for i in range(0, len(samples[epoch])):
@@ -603,7 +602,7 @@ def view_samples(epoch, samples):
         img = np.transpose(img, (1, 2, 0))
         img = ((img + 1)*255 / (2)).astype(np.uint8)
         
-        plt.imshow(img.reshape((32,32,3)))
+        plt.imshow(img.reshape(32,32))
         plt.savefig('DCGAN2_generated_images/epoch%d/image_%d.png' % (epoch+1, i))
     
 #def save_samples(epoch, samples):
