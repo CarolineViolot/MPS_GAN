@@ -10,7 +10,7 @@ import numpy as np
 #import problem_unittests as tests
 import helper
 
-get_ipython().run_line_magic('matplotlib', 'inline')
+#get_ipython().run_line_magic('matplotlib', 'inline')
 
 # necessary imports
 import torch
