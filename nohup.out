@@ -1,37 +1,9 @@
-2020-05-31 14:32:25.768378: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcuda.so.1
-2020-05-31 14:32:25.865076: E tensorflow/stream_executor/cuda/cuda_driver.cc:313] failed call to cuInit: CUDA_ERROR_NO_DEVICE: no CUDA-capable device is detected
-2020-05-31 14:32:25.865395: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:156] kernel driver does not appear to be running on this host (knl.gaia.unil.ch): /proc/driver/nvidia/version does not exist
-2020-05-31 14:32:25.867419: I tensorflow/core/platform/cpu_feature_guard.cc:143] Your CPU supports instructions that this TensorFlow binary was not compiled to use: AVX2 AVX512F FMA
-2020-05-31 14:32:25.952569: I tensorflow/core/platform/profile_utils/cpu_utils.cc:102] CPU Frequency: 1300065000 Hz
-2020-05-31 14:32:25.986598: I tensorflow/compiler/xla/service/service.cc:168] XLA service 0x56404fe27520 initialized for platform Host (this does not guarantee that XLA will be used). Devices:
-2020-05-31 14:32:25.986812: I tensorflow/compiler/xla/service/service.cc:176]   StreamExecutor device (0): Host, Default Version
-/home/knl/anaconda3/lib/python3.6/site-packages/matplotlib/pyplot.py:514: RuntimeWarning: More than 20 figures have been opened. Figures created through the pyplot interface (`matplotlib.pyplot.figure`) are retained until explicitly closed and may consume too much memory. (To control this warning, see the rcParam `figure.max_open_warning`).
-  max_open_warning, RuntimeWarning)
-Image shape: (28, 28, 1)
-100 [D loss: 0.000463, acc.: 100.00%] [G loss: 1.114220]
-200 [D loss: 0.000322, acc.: 100.00%] [G loss: 2.277861]
-300 [D loss: 0.000202, acc.: 100.00%] [G loss: 2.020719]
-400 [D loss: 0.000099, acc.: 100.00%] [G loss: 0.657445]
-500 [D loss: 0.000096, acc.: 100.00%] [G loss: 0.491222]
-600 [D loss: 0.290907, acc.: 100.00%] [G loss: 7.379280]
-700 [D loss: 0.005193, acc.: 100.00%] [G loss: 12.886945]
-800 [D loss: 0.000537, acc.: 100.00%] [G loss: 0.327022]
-900 [D loss: 0.000392, acc.: 100.00%] [G loss: 2.116758]
-1000 [D loss: 0.000431, acc.: 100.00%] [G loss: 7.288246]
-1100 [D loss: 0.001523, acc.: 100.00%] [G loss: 2.748362]
-1200 [D loss: 0.005561, acc.: 100.00%] [G loss: 2.975119]
-1300 [D loss: 0.001681, acc.: 100.00%] [G loss: 0.707149]
-1400 [D loss: 0.000523, acc.: 100.00%] [G loss: 0.015835]
-1500 [D loss: 0.000225, acc.: 100.00%] [G loss: 0.016267]
-1600 [D loss: 0.000157, acc.: 100.00%] [G loss: 0.015549]
-1700 [D loss: 0.000116, acc.: 100.00%] [G loss: 0.022963]
-1800 [D loss: 0.000090, acc.: 100.00%] [G loss: 0.024753]
-1900 [D loss: 0.000072, acc.: 100.00%] [G loss: 0.024029]
-2000 [D loss: 0.000049, acc.: 100.00%] [G loss: 0.023438]
-2020-05-31 17:21:38.629783: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcuda.so.1
-2020-05-31 17:21:38.725400: E tensorflow/stream_executor/cuda/cuda_driver.cc:313] failed call to cuInit: CUDA_ERROR_NO_DEVICE: no CUDA-capable device is detected
-2020-05-31 17:21:38.725692: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:156] kernel driver does not appear to be running on this host (knl.gaia.unil.ch): /proc/driver/nvidia/version does not exist
-2020-05-31 17:21:38.727611: I tensorflow/core/platform/cpu_feature_guard.cc:143] Your CPU supports instructions that this TensorFlow binary was not compiled to use: AVX2 AVX512F FMA
-2020-05-31 17:21:38.815625: I tensorflow/core/platform/profile_utils/cpu_utils.cc:102] CPU Frequency: 1300065000 Hz
-2020-05-31 17:21:38.853513: I tensorflow/compiler/xla/service/service.cc:168] XLA service 0x55df264f7380 initialized for platform Host (this does not guarantee that XLA will be used). Devices:
-2020-05-31 17:21:38.853720: I tensorflow/compiler/xla/service/service.cc:176]   StreamExecutor device (0): Host, Default Version
+python3: can't open file 'DCGAN2.py': [Errno 2] No such file or directory
+Traceback (most recent call last):
+  File "DCGAN_2.py", line 11, in <module>
+    import helper
+ModuleNotFoundError: No module named 'helper'
+Traceback (most recent call last):
+  File "DCGAN_2.py", line 13, in <module>
+    get_ipython().run_line_magic('matplotlib', 'inline')
+NameError: name 'get_ipython' is not defined
