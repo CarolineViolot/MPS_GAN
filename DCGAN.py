@@ -45,29 +45,29 @@ def build_generator(z_dim):
 
     # Reshape input into 7x7x256 tensor via a fully connected layer
     
-    model.add(Dense(7*7*512, use_bias = False,input_shape=(z_dim,)))
+    model.add(Dense(7*7*256, use_bias = False,input_shape=(z_dim,)))
     model.add(BatchNormalization())
     model.add(LeakyReLU())
-    model.add(Reshape((7, 7, 512)))
-    assert model.output_shape == (None, 7, 7, 512)
+    model.add(Reshape((7, 7, 256)))
+    assert model.output_shape == (None, 7, 7, 256)
     
     
     # Transposed convolution layer, from 7x7x512 into 14x14x256 tensor
-    model.add(Conv2DTranspose(256, kernel_size=3, strides=2, padding='same'))
-    assert model.output_shape == (None, 14, 14, 256)
+    model.add(Conv2DTranspose(128, kernel_size=3, strides=2, padding='same'))
+    assert model.output_shape == (None, 14,14, 128)
     model.add(BatchNormalization())
     model.add(LeakyReLU(alpha=0.1))
 
     # Transposed convolution layer, from 14x14x256 to 14x14x128 tensor
-    model.add(Conv2DTranspose(128, kernel_size=3, strides=1, padding='same'))
-    assert model.output_shape == (None, 14, 14, 128)
+    model.add(Conv2DTranspose(64, kernel_size=3, strides=1, padding='same'))
+    assert model.output_shape == (None, 14, 14, 64)
     model.add(BatchNormalization())
     model.add(LeakyReLU(alpha=0.1))
 
     # Transposed convolution layer, from 14x14x128 to 14x14x64
-    model.add(Conv2DTranspose(64, kernel_size=3, strides=1, padding='same'))
-    model.add(BatchNormalization())
-    model.add(LeakyReLU(alpha=0.1))
+  #  model.add(Conv2DTranspose(64, kernel_size=3, strides=1, padding='same'))
+  #  model.add(BatchNormalization())
+  #  model.add(LeakyReLU(alpha=0.1))
 
     # Transposed convolution layer, from 14x14x64 to 28x28x1 tensor
     model.add(Conv2DTranspose(1, kernel_size=3, strides=2, padding='same'))
@@ -182,14 +182,6 @@ def divide_images(X_train, img_size):
                 new_images(append())
 
 
-# In[ ]:
-
-
-
-
-
-# ## Training
-
 # In[52]:
 
 
@@ -198,7 +190,7 @@ accuracies = []
 iteration_checkpoints = []
 
 
-def train(iterations, batch_size, sample_interval):
+def train(iterations, batch_size, sample_interval, save_images = True):
 
     # Load the Gaussian dataset
     X_train = create_dataset('Images28x28/Images/*')
@@ -245,7 +237,7 @@ def train(iterations, batch_size, sample_interval):
         # Train Generator
         g_loss = gan.train_on_batch(z, real)
 
-        if (iteration + 1) % sample_interval == 0:
+        if((iteration + 1) % sample_interval == 0): 
 
             # Save losses and accuracies so they can be plotted after training
             losses.append((d_loss, g_loss))
@@ -255,9 +247,14 @@ def train(iterations, batch_size, sample_interval):
             # Output training progress
             print("%d [D loss: %f, acc.: %.2f%%] [G loss: %f]" %
                   (iteration + 1, d_loss, 100.0 * accuracy, g_loss))
+            
+            model_json = gan.to_json()
+            with open("model.json", "w") as json_file:
+                json_file.write(model_json)
 
+            if (save_images == True):
             # Output a sample of generated image
-            sample_images(generator, iteration)
+                sample_images(generator, iteration)
 
 
 # In[59]:
@@ -283,38 +280,24 @@ def sample_images(generator,iteration, image_grid_rows=4, image_grid_columns=4 )
         plt.axis('off')
     plt.tight_layout()
     plt.savefig('DCGAN_generated_images/gan_generated_image_epoch_%d.png' % (iteration+1))
-    """
-    fig, axs = plt.subplots(image_grid_rows,
-                            image_grid_columns,
-                            figsize=(10, 10),
-                            sharey=True,
-                            sharex=True)
-
-    cnt = 0
-    for i in range(image_grid_rows):
-        for j in range(image_grid_columns):
-            # Output a grid of images
-            axs[i, j].imshow(gen_imgs[cnt, :, :, 0], cmap='gray')
-            axs[i, j].axis('off')
-            cnt += 1
-            """
+    
 
 
-# ## Train the Model and Inspect Output
-
-# Note that the `'Discrepancy between trainable weights and collected trainable'` warning from Keras is expected. It is by design: The Generator's trainable parameters are intentionally held constant during Discriminator training, and vice versa.
-
-# In[61]:
+#%%
 
 
 # Set hyperparameters
-iterations = 25000
-batch_size = 128
-sample_interval = 1000
+iterations = 2000
+batch_size = 16
+sample_interval = 100
 
 # Train the DCGAN for the specified number of iterations
-train(iterations, batch_size, sample_interval)
+train(iterations, batch_size, sample_interval, save_images = False)
 
+# serialize model to JSON
+model_json = gan.to_json()
+with open("model.json", "w") as json_file:
+    json_file.write(model_json)
 
 # In[62]:
 
@@ -352,8 +335,16 @@ plt.ylabel("Accuracy (%)")
 plt.legend()
 
 
-# In[ ]:
+#%% Image generation for statistical comparison
+
+# Sample random noise
+z = np.random.normal(0, 1, (10, 100))
+print(z.shape)
+# Generate images from random noise
+gen_imgs = generator.predict(z)
 
 
-
+plt.figure(figsize=(10,10))
+plt.imshow(gen_imgs[1].squeeze(), interpolation='nearest', cmap='gray_r')
+plt.axis('off')
 
