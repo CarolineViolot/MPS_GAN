@@ -42,7 +42,7 @@ def get_dataloader(batch_size, image_size, data_dir=data_dir):
 
 # Define function hyperparameters
 batch_size = 16
-img_size = 64
+img_size = 32
 
 # Call your function and get a dataloader
 train_loader = get_dataloader(batch_size, img_size)
@@ -56,6 +56,7 @@ images, _ = dataiter.next() # _ for no labels
 
 
 # plot the images in the batch, along with the corresponding labels
+'''
 fig = plt.figure(figsize=(10, 10))
 plot_size=16
 for idx in np.arange(plot_size):
@@ -64,7 +65,7 @@ for idx in np.arange(plot_size):
     print(images[idx].shape)
     plt.imshow(images[idx].reshape(64, 64))
 
-
+'''
 #%%
 
 
@@ -608,6 +609,7 @@ def view_samples(epoch, samples):
         
         plt.imshow(img.reshape(32,32))
         plt.savefig('DCGAN2_generated_images/epoch%d/image_%d.png' % (epoch+1, i))
+	plt.close()
     
 #def save_samples(epoch, samples):
 
