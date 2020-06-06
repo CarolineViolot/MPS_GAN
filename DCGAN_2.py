@@ -8,7 +8,7 @@ import pickle as pkl
 import matplotlib.pyplot as plt
 import numpy as np
 #import problem_unittests as tests
-import helper
+#import helper
 
 #get_ipython().run_line_magic('matplotlib', 'inline')
 
@@ -243,13 +243,13 @@ class Generator(nn.Module):
         
 
     def forward(self, x):
-        """
+        """newlayer = newlayer.cuda
         Forward propagation of the neural network
         :param x: The input to the neural network     
         :return: A 32x32x3 Tensor image as output
         """
         # fully-connected + reshape 
-        out = self.fc(x)
+        out = self.fc(x.cuda())
         out = out.view(-1, self.conv_dim*8, 2, 2) # (batch_size, depth, 4, 4)
         
         # hidden transpose conv layers + relu
@@ -346,8 +346,10 @@ import torch
 # Check for a GPU
 train_on_gpu = torch.cuda.is_available()
 if not train_on_gpu:
+    
     print('No GPU found. Please use a GPU to train your neural network.')
 else:
+    
     print('Training on GPU!')
 
 
