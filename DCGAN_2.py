@@ -532,6 +532,8 @@ def train(D, G, n_epochs, print_every=50):
                 plt.figure(figsize=(10,10))
                 plt.imshow(img)#.squeeze())#, interpolation='nearest')#, cmap='gray_r')
                 plt.axis('off')
+                plt.savefig('DCGAN2_generated_images/image_epoch'+str(epoch)+'_batch'+str(batch_i))
+		
 
                 
                 
@@ -541,17 +543,17 @@ def train(D, G, n_epochs, print_every=50):
         # this code assumes your generator is named G, feel free to change the name
         # generate and save sample, fake images
             
-        G.eval() # forz = np.random.uniform(-1, 1, size=(sample_size, z_size))
+        #G.eval() # forz = np.random.uniform(-1, 1, size=(sample_size, z_size))
     
         #fixed_z = torch.from_numpy(fixed_z).float()
-        samples_z = G(fixed_z)
-        samples.append(samples_z)
-        G.train() # back to training mode
+        #samples_z = G(fixed_z)
+        #samples.append(samples_z)
+        #G.train() # back to training mode
     
     
     # Save training generator samples
-    with open('train_samples.pkl', 'wb') as f:
-        pkl.dump(samples, f)
+    #with open('train_samples.pkl', 'wb') as f:
+     #   pkl.dump(samples, f)
         
     # finally return losses
     return losses
@@ -563,7 +565,7 @@ def train(D, G, n_epochs, print_every=50):
 
 
 # set number of epochs 
-n_epochs = 2
+n_epochs = 10
 
 # call training function
 
@@ -596,7 +598,7 @@ def view_samples(epoch, samples):
         ax.xaxis.set_visible(False)
         ax.yaxis.set_visible(False)
         im = ax.imshow(img.reshape(32,32))
-    plt.savefig('DCGAN2_generated_images/gan_generated_image_epoch_%d.png' % (epoch+1))
+        
     
     for i in range(0, len(samples[epoch])):
         fig = plt.figure()
