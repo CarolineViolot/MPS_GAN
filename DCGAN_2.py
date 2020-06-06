@@ -2,7 +2,7 @@
 # coding: utf-8
 
 
-data_dir = 'Images64x64/Images/'
+data_dir = 'Images28x28/'
 
 import pickle as pkl
 import matplotlib.pyplot as plt
