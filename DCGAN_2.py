@@ -534,7 +534,7 @@ def train(D, G, n_epochs, print_every=50):
                 plt.imshow(img)#.squeeze())#, interpolation='nearest')#, cmap='gray_r')
                 plt.axis('off')
                 plt.savefig('DCGAN2_generated_images/image_epoch'+str(epoch)+'_batch'+str(batch_i))
-		
+		plt.close('all')
 
                 
                 
@@ -609,11 +609,11 @@ def view_samples(epoch, samples):
         
         plt.imshow(img.reshape(32,32))
         plt.savefig('DCGAN2_generated_images/epoch%d/image_%d.png' % (epoch+1, i))
-	plt.close()
+
     
 #def save_samples(epoch, samples):
 
-
+'''
 # Load samples from generator, taken while training
 with open('train_samples.pkl', 'rb') as f:
     samples = pkl.load(f)
@@ -623,4 +623,4 @@ with open('train_samples.pkl', 'rb') as f:
 
 for epoch in range(0, 1):
     _ = view_samples(0, samples)
-
+'''
