@@ -534,7 +534,7 @@ def train(D, G, n_epochs, print_every=50):
                 plt.imshow(img)#.squeeze())#, interpolation='nearest')#, cmap='gray_r')
                 plt.axis('off')
                 plt.savefig('DCGAN2_generated_images/image_epoch'+str(epoch)+'_batch'+str(batch_i))
-		plt.close('all')
+                plt.close('all')
 
                 
                 
