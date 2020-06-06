@@ -2,7 +2,7 @@
 # coding: utf-8
 
 
-data_dir = 'Images64x64/'
+data_dir = 'Images64x64/Images/'
 
 import pickle as pkl
 import matplotlib.pyplot as plt
@@ -19,7 +19,7 @@ from torchvision import transforms
 
 #%%
 
-def get_dataloader(batch_size, image_size, data_dir='Images64x64/'):
+def get_dataloader(batch_size, image_size, data_dir=data_dir):
     """
     Batch the neural network data using DataLoader
     :param batch_size: The size of each batch; the number of images in a batch
