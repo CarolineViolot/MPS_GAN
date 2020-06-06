@@ -5,8 +5,7 @@ data_dir = 'Images28x28/'
 import pickle as pkl
 import matplotlib.pyplot as plt
 import numpy as np
-#import problem_unittests as tests
-import helper
+
 
 
 
