@@ -1,9 +1,0 @@
-python3: can't open file 'DCGAN2.py': [Errno 2] No such file or directory
-Traceback (most recent call last):
-  File "DCGAN_2.py", line 11, in <module>
-    import helper
-ModuleNotFoundError: No module named 'helper'
-Traceback (most recent call last):
-  File "DCGAN_2.py", line 13, in <module>
-    get_ipython().run_line_magic('matplotlib', 'inline')
-NameError: name 'get_ipython' is not defined
