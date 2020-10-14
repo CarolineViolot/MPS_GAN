@@ -7,6 +7,7 @@ Created on Fri Sep 25 09:46:43 2020
 """
 
 from __future__ import print_function
+import argparse
 #%matplotlib inline
 import argparse
 import os
@@ -25,45 +26,6 @@ import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 from IPython.display import HTML
 
-# Set random seed for reproducibility
-manualSeed = 999
-#manualSeed = random.randint(1, 10000) # use if you want new results
-print("Random Seed: ", manualSeed)
-random.seed(manualSeed)
-torch.manual_seed(manualSeed)
-
-dataroot = "Datasets/Stone"
-workers = 2
-batch_size = 32
-image_size = 64
-nc = 3
-nz = 100
-ngf = 64
-ndf = 64
-num_epochs = 5
-lr = 0.0002
-beta1 = 0.5
-ngpu = 0
-
-dataset = dset.ImageFolder(root=dataroot,
-                           transform=transforms.Compose([
-                               transforms.Resize(image_size),
-                               transforms.CenterCrop(image_size),
-                               transforms.ToTensor(),
-                               transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5)),
-                           ]))
-
-dataloader = torch.utils.data.DataLoader(dataset, batch_size=batch_size,
-                                         shuffle=True, num_workers=workers)
-
-device = torch.device("cuda:0" if (torch.cuda.is_available() and ngpu > 0) else "cpu")
-
-# Plot some training images
-real_batch = next(iter(dataloader))
-plt.figure(figsize=(8,8))
-plt.axis("off")
-plt.title("Training Images")
-plt.imshow(np.transpose(vutils.make_grid(real_batch[0].to(device)[:64], padding=2, normalize=True).cpu(),(1,2,0)))
 
 def weights_init(m):
 	classname = m.__class__.__name__
@@ -247,8 +209,61 @@ def main(testing=False):
         plt.title("Fake Images")
         plt.imshow(np.transpose(img_list[-1],(1,2,0)))
         plt.show()
+        plt.savefig("Fake_images_"+str(iters - 1)+".png")
     
 if __name__ == "__main__":
+    
+    # Set random seed for reproducibility
+    #manualSeed = 999
+    manualSeed = random.randint(1, 10000) # use if you want new results
+    print("Random Seed: ", manualSeed)
+    random.seed(manualSeed)
+    torch.manual_seed(manualSeed)
+    
+    dataroot = "Datasets/Stone"
+    workers = 2
+    batch_size = 16
+    image_size = 64
+    nc = 3
+    nz = 100
+    ngf = 64
+    ndf = 64
+    num_epochs = 1
+    lr = 0.0002
+    beta1 = 0.5
+    ngpu = 0
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-d","--dataroot", type=str, help="relative path to dataset folder (reminder : need to be in the folder containing the Images folder)")
+    parser.add_argument("-e","--epochs", type=int, help="number of epochs")
+    parser.add_argument("-b", "--batch_size", type=int, help="size of the batch to be consider during training")
+    args = parser.parse_args()
+    print("datapath : ", args.dataroot)
+    if args.dataroot is not None:
+        dataroot = args.dataroot
+    if args.batch_size is not None:
+        batch_size = args.batch_size
+    if args.epochs is not None:
+        num_epochs = args.epochs
+    
+    dataset = dset.ImageFolder(root=dataroot,
+                               transform=transforms.Compose([
+                                   transforms.Resize(image_size),
+                                   transforms.CenterCrop(image_size),
+                                   transforms.ToTensor(),
+                                   transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5)),
+                               ]))
+    
+    dataloader = torch.utils.data.DataLoader(dataset, batch_size=batch_size,
+                                             shuffle=True, num_workers=workers)
+    
+    device = torch.device("cuda:0" if (torch.cuda.is_available() and ngpu > 0) else "cpu")
+    
+    # Plot some training images
+    real_batch = next(iter(dataloader))
+    plt.figure(figsize=(8,8))
+    plt.axis("off")
+    plt.title("Training Images")
+    plt.imshow(np.transpose(vutils.make_grid(real_batch[0].to(device)[:64], padding=2, normalize=True).cpu(),(1,2,0)))
     testing = False
     main(testing)
 
