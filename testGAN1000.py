@@ -236,6 +236,7 @@ if __name__ == "__main__":
     parser.add_argument("-d","--dataroot", type=str, help="relative path to dataset folder (reminder : need to be in the folder containing the Images folder)")
     parser.add_argument("-e","--epochs", type=int, help="number of epochs")
     parser.add_argument("-b", "--batch_size", type=int, help="size of the batch to be consider during training")
+    parser.add_argument("-g", "--ngpu", type=int, help="number of available gpus")
     args = parser.parse_args()
     print("datapath : ", args.dataroot)
     if args.dataroot is not None:
