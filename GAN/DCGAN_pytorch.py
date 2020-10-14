@@ -1,22 +1,17 @@
-
-
-data_dir = 'Images28x28/'
+data_dir = '../Datasets/Images28x28/'
+batch_size = 16
+img_size = 28
 
 import pickle as pkl
 import matplotlib.pyplot as plt
 import numpy as np
-
-
-
-
-# necessary imports
 import torch
 from torchvision import datasets as dset
 from torchvision import transforms
 
 
 
-def get_dataloader(batch_size, image_size, data_dir='Images28x28/'):
+def get_dataloader(batch_size, image_size, data_dir=data_dir):
     """
     Batch the neural network data using DataLoader
     :param batch_size: The size of each batch; the number of images in a batch
@@ -35,18 +30,8 @@ def get_dataloader(batch_size, image_size, data_dir='Images28x28/'):
     
     return data_loader
 
-
-
-
-# Define function hyperparameters
-batch_size = 16
-img_size = 64
-
 # Call your function and get a dataloader
 train_loader = get_dataloader(batch_size, img_size)
-
-
-import torch
 
 # Check for a GPU
 train_on_gpu = torch.cuda.is_available()
@@ -73,13 +58,11 @@ images, _ = dataiter.next() # _ for no labels
 # plot the images in the batch, along with the corresponding labels
 fig = plt.figure(figsize=(16, 4))
 plot_size=16
+
 for idx in np.arange(plot_size):
     
     ax = fig.add_subplot(2, plot_size/2, idx+1, xticks=[], yticks=[])
     imshow(images[idx])
-
-
-
 
 def scale(x, feature_range=(-1, 1)):
     ''' Scale takes in an image x and returns that image, scaled
@@ -89,19 +72,6 @@ def scale(x, feature_range=(-1, 1)):
     # scale to feature_range and return scaled x
     
     return x * (feature_range[1] - feature_range[0]) + feature_range[0]
-
-
-# In[12]:
-
-
-# check scaled range
-# should be close to -1 to 1
-img = images[0]
-scaled_img = scale(img)
-
-print('Min: ', scaled_img.min())
-print('Max: ', scaled_img.max())
-
 
 import torch.nn as nn
 import torch.nn.functional as F
