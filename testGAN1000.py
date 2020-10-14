@@ -245,6 +245,8 @@ if __name__ == "__main__":
         batch_size = args.batch_size
     if args.epochs is not None:
         num_epochs = args.epochs
+    if args.ngpu is not None:
+        ngpu = args.ngpu
     
     dataset = dset.ImageFolder(root=dataroot,
                                transform=transforms.Compose([
