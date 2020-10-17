@@ -9,9 +9,11 @@ Created on Sat Oct 17 17:43:47 2020
 import imageio
 import os
 
-images = []
-for filename in  os.listdir("GeneratedImages/GAN"):
-    images.append(imageio.imread(filename))
-    imageio.mimsave('/GeneratedImages/GANGIF.gif', images)
+with imageio.get_writer('GeneratedImages/GANGIF2.gif', mode='I', fps = 10) as writer:
+    files = sorted(os.listdir("GeneratedImages/GAN/"))
     
-    
+    for i in range (0, 8000, 20):#0:20: filename in files:
+        
+        image = imageio.imread("GeneratedImages/GAN/"+str(i)+".png")
+        writer.append_data(image)
+
