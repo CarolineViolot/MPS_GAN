@@ -200,8 +200,7 @@ def main(testing=False, GIF = False):
             if GIF and (iters % 20 == 0):
                 with torch.no_grad():
                     fake = netG(fixed_noise).detach().cpu()
-                    print(fake[0].type())
-                
+                    
                 
                 fig1, ax1 = plt.subplots()
                 ax1.axis("off")
