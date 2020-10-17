@@ -206,7 +206,7 @@ def main(testing=False, GIF = False):
                 ax1.axis("off")
                 ax1.imshow(np.transpose(vutils.make_grid(fake[0], normalize=True),(1,2,0)))
                 
-                fig1.savefig("GeneratedImages/GAN/fake_"+str(iters) +".png")
+                fig1.savefig("GeneratedImages/GAN/"+str(iters) +".png")
                 
             # Check how the generator is doing by saving G's output on fixed_noise
             if (iters % 500 == 0) or ((epoch == num_epochs-1) and (i == len(dataloader)-1)):
