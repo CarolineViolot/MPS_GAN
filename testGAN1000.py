@@ -217,7 +217,7 @@ def main(testing=False, GIF = False):
                 ax1.axis("off")
                 ax1.imshow(np.transpose(vutils.make_grid(fake[0], normalize=True),(1,2,0)))
                 
-                fig1.savefig("GeneratedImages/GAN/fake_e_"+str(epoch)+"_"+str(iters) +".png")
+                fig1.savefig("GeneratedImages/GAN/GAUSSIAN/fake_e_"+str(epoch)+"_"+str(iters) +".png")
                 
             # Check how the generator is doing by saving G's output on fixed_noise
             if (iters % 500 == 0) or ((epoch == num_epochs-1) and (i == len(dataloader)-1)):
@@ -251,11 +251,11 @@ if __name__ == "__main__":
     imageType = "Stone"
     workers = 2
     batch_size = 16
-    image_size = 128
+    image_size = 64
     nc = 3
     nz = 100
-    ngf = 128
-    ndf = 128
+    ngf = 64
+    ndf = 64
     num_epochs = 1
     lr = 0.0002
     beta1 = 0.5
@@ -267,7 +267,7 @@ if __name__ == "__main__":
     parser.add_argument("-g", "--ngpu", type=int, help="number of available gpus")
     args = parser.parse_args()
     print("datapath :  Datasests/", args.imageType)
-    if args.dataroot is not None:
+    if args.imageType is not None:
         dataroot = dataroot + args.imageType + "/"
     if args.batch_size is not None:
         batch_size = args.batch_size
