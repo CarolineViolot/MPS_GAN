@@ -203,14 +203,23 @@ def main(testing=False, GIF = False):
                 with torch.no_grad():
                     fake = netG(fixed_noise).detach().cpu()
                     
-                
+                """
                 fig1, ax1 = plt.subplots()
                 ax1.axis("off")
                 
-                ax1.imshow(np.transpose(vutils.make_grid(fake[0], normalize=True),(1,2,0)), aspect = 'normal')
-                
-                fig1.savefig("GeneratedImages/GAN/GAUSSIAN/fake_e_"+str(epoch)+"_"+str(iters) +".png", dpi=1)
-                
+                print(np.transpose(vutils.make_grid(fake[0], normalize=True),(1,2,0)).size())
+                fig1.savefig("GeneratedImages/GAN/GAUSSIAN/fake_e_"+str(epoch)+"_"+str(iters) +".png")
+                """
+                arr = np.transpose(vutils.make_grid(fake[0], normalize=True),(1,2,0))
+                dpi = 96
+                fig = plt.figure(frameon=False)
+                fig.set_size_inches(arr.shape[1]/dpi, arr.shape[0]/dpi)
+                ax = plt.Axes(fig, [0., 0., 1., 1.])
+                ax.set_axis_off()
+                fig.add_axes(ax)
+                ax.imshow(arr)
+                plt.savefig("GeneratedImages/GAN/GAUSSIAN/fake_e_"+str(epoch)+"_"+str(iters) +".png", dpi=dpi)
+                            
             # Check how the generator is doing by saving G's output on fixed_noise
             if (iters % 500 == 0) or ((epoch == num_epochs-1) and (i == len(dataloader)-1)):
                 with torch.no_grad():
@@ -239,8 +248,8 @@ if __name__ == "__main__":
     random.seed(manualSeed)
     torch.manual_seed(manualSeed)
     
-    dataroot = "Datasets/"
-    imageType = "Stone"
+    dataroot = "Datasets/Stone/"
+    #imageType = "Stone/"
     workers = 2
     batch_size = 16
     image_size = 64
