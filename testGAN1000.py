@@ -247,7 +247,8 @@ if __name__ == "__main__":
     random.seed(manualSeed)
     torch.manual_seed(manualSeed)
     
-    dataroot = "Datasets/Stone"
+    dataroot = "Datasets/"
+    imageType = "Stone"
     workers = 2
     batch_size = 16
     image_size = 128
@@ -260,14 +261,14 @@ if __name__ == "__main__":
     beta1 = 0.5
     ngpu = 0
     parser = argparse.ArgumentParser()
-    parser.add_argument("-d","--dataroot", type=str, help="relative path to dataset folder (reminder : need to be in the folder containing the Images folder)")
+    parser.add_argument("-i", "--imageType", type=str, help="Image type : 'Gaussian64x64', or 'Stone'")
     parser.add_argument("-e","--epochs", type=int, help="number of epochs")
     parser.add_argument("-b", "--batch_size", type=int, help="size of the batch to be consider during training")
     parser.add_argument("-g", "--ngpu", type=int, help="number of available gpus")
     args = parser.parse_args()
-    print("datapath : ", args.dataroot)
+    print("datapath :  Datasests/", args.imageType)
     if args.dataroot is not None:
-        dataroot = args.dataroot
+        dataroot = dataroot + args.imageType + "/"
     if args.batch_size is not None:
         batch_size = args.batch_size
     if args.epochs is not None:

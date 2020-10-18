@@ -12,6 +12,7 @@ import os
 with imageio.get_writer('GeneratedImages/GANGIF2.gif', mode='I', fps = 10) as writer:
     files = sorted(os.listdir("GeneratedImages/GAN/"))
     
+    
     for i in range (0, 8000, 20):#0:20: filename in files:
         
         image = imageio.imread("GeneratedImages/GAN/"+str(i)+".png")
