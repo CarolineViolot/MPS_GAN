@@ -253,8 +253,8 @@ if __name__ == "__main__":
     image_size = 128
     nc = 3
     nz = 100
-    ngf = 64
-    ndf = 64
+    ngf = 128
+    ndf = 128
     num_epochs = 1
     lr = 0.0002
     beta1 = 0.5
