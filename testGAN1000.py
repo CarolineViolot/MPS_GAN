@@ -296,4 +296,4 @@ if __name__ == "__main__":
     plt.imshow(np.transpose(vutils.make_grid(real_batch[0].to(device)[:4], padding=2, normalize=True).cpu(),(1,2,0)))
     testing = False
     GIF = True
-    main(testing, GIF,str(imageType))
+    main(str(imageType),testing, GIF)
