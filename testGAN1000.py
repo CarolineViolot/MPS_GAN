@@ -94,7 +94,7 @@ class  Discriminator(nn.Module):
 	def forward(self, input):
 		return self.main(input)
 
-def main(testing=False, GIF = False):
+def main(imageType, testing=False, GIF = False):
     #create generator
     netG = Generator(ngpu).to(device)
     netD = Discriminator(ngpu).to(device)
@@ -208,7 +208,7 @@ def main(testing=False, GIF = False):
                 ax1.axis("off")
                 
                 print(np.transpose(vutils.make_grid(fake[0], normalize=True),(1,2,0)).size())
-                fig1.savefig("GeneratedImages/GAN/STONE/fake_e_"+str(epoch)+"_"+str(iters) +".png")
+                fig1.savefig("GeneratedImages/GAN/args/fake_e_"+str(epoch)+"_"+str(iters) +".png")
                 """
                 arr = np.transpose(vutils.make_grid(fake[0], normalize=True),(1,2,0))
                 dpi = 96
@@ -218,7 +218,7 @@ def main(testing=False, GIF = False):
                 ax.set_axis_off()
                 fig.add_axes(ax)
                 ax.imshow(arr)
-                plt.savefig("GeneratedImages/GAN/GAUSSIAN/fake_e_"+str(epoch)+"_"+str(iters) +".png", dpi=dpi)
+                plt.savefig("GeneratedImages/GAN/"+ imageType+ "/fake_e_"+str(epoch)+"_"+str(iters) +".png", dpi=dpi)
                             
             # Check how the generator is doing by saving G's output on fixed_noise
             if (iters % 500 == 0) or ((epoch == num_epochs-1) and (i == len(dataloader)-1)):
@@ -249,7 +249,7 @@ if __name__ == "__main__":
     torch.manual_seed(manualSeed)
     
     dataroot = "Datasets/Stone/"
-    #imageType = "Stone/"
+    imageType = "Stone/"
     workers = 2
     batch_size = 16
     image_size = 64
@@ -268,7 +268,9 @@ if __name__ == "__main__":
     parser.add_argument("-g", "--ngpu", type=int, help="number of available gpus")
     args = parser.parse_args()
     print("datapath :  Datasests/", args.imageType)
+
     if args.imageType is not None:
+        imageType = args.imageType
         dataroot = "Datasets/" + args.imageType + "/"
     if args.batch_size is not None:
         batch_size = args.batch_size
@@ -299,4 +301,4 @@ if __name__ == "__main__":
     plt.imshow(np.transpose(vutils.make_grid(real_batch[0].to(device)[:4], padding=2, normalize=True).cpu(),(1,2,0)))
     testing = False
     GIF = True
-    main(testing, GIF)
+    main(testing, GIF,imageType)

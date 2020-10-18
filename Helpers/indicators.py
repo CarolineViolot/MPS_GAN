@@ -89,6 +89,7 @@ kernel =sigma2*np.exp(-(h/lc)**a); # kernel
 simulationSize=(imsize,imsize);
 sim=np.real(fft.ifft2(fft.fft2(np.random.randn(simulationSize[0],simulationSize[1]))
 	*((fft.fft2(np.pad(kernel,((simulationSize[0]-kernel.shape[0],0),(simulationSize[1]-kernel.shape[1],0)))))**.5)));
+print(sim.shape)
 plt.figure()
 plt.imshow(sim)
 plt.title("Gaussian Generated Image")
@@ -117,7 +118,7 @@ def create_dataset(file_path):
     img_ds = np.array(list(img_ds))
     return img_ds
 
-generated_images = create_dataset('../GeneratedImages/GAN/*.png')
+generated_images = create_dataset('../GeneratedImages/GAN/GAUSSIAN/*.png')
 
 #%% QUALITY INDICATORS:
 #% 1) HISTOGRAM
@@ -127,15 +128,20 @@ print("Simulation shape : ", sim[:, :, None].shape)
 #rsim=np.repeat(sim[:, :, None],10,axis=2)
 #print(rsim.shape)
 
-rsim = generated_images[0:10].reshape(64,64,10)
-plt.figure()
-plt.axis('off')
-plt.imshow(rsim[1].squeeze())
-#rsim = X_train
-rsim=rsim+np.random.rand(np.shape(rsim)[0],np.shape(rsim)[1],np.shape(rsim)[2])
+rsim = generated_images[0:400].reshape(64,64,400)
+
+rsim=rsim#+np.random.rand(np.shape(rsim)[0],np.shape(rsim)[1],np.shape(rsim)[2])
 #%%
 #histogram comparison
-yref,x=np.histogram(sim.ravel())
+generated_images = create_dataset('../GeneratedImages/GAN/GAUSSIAN/*.png')
+generated_images = generated_images[0:400].reshape(64,64,400)
+real_images = create_dataset('../Datasets/Gaussian64x64/Images/*.png')
+#%%
+test_image = np.zeros((64, 64))
+for i in range (0, 10):
+    
+    test_image = test_image + real_images[i]/10
+yref,x=np.histogram(test_image.ravel())
 x=(x[:-1]+x[1:])/2
 y=np.zeros((len(x),np.shape(rsim)[2]))
 for i in range(np.shape(rsim)[2]):
