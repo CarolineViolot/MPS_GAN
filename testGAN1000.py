@@ -218,7 +218,7 @@ def main(imageType, testing=False, GIF = False):
                 ax.set_axis_off()
                 fig.add_axes(ax)
                 ax.imshow(arr)
-                print(imageType)
+              
                 plt.savefig("GeneratedImages/GAN/"+ str(imageType)+ "/fake_e_"+str(epoch)+"_"+str(iters) +".png", dpi=dpi)
                             
             # Check how the generator is doing by saving G's output on fixed_noise
