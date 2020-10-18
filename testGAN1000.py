@@ -269,7 +269,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
     print("datapath :  Datasests/", args.imageType)
     if args.imageType is not None:
-        dataroot = dataroot + args.imageType + "/"
+        dataroot = "Datasets/" + args.imageType + "/"
     if args.batch_size is not None:
         batch_size = args.batch_size
     if args.epochs is not None:
