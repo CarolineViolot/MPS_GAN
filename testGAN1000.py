@@ -249,7 +249,7 @@ if __name__ == "__main__":
     torch.manual_seed(manualSeed)
     
     dataroot = "Datasets/Stone/"
-    imageType = "Stone/"
+    imageType = "Stone"
     workers = 2
     batch_size = 16
     image_size = 64
@@ -267,7 +267,7 @@ if __name__ == "__main__":
     parser.add_argument("-b", "--batch_size", type=int, help="size of the batch to be consider during training")
     parser.add_argument("-g", "--ngpu", type=int, help="number of available gpus")
     args = parser.parse_args()
-    print("datapath :  Datasests/", args.imageType)
+    print("datapath :  Datasets/", args.imageType)
 
     if args.imageType is not None:
         imageType = args.imageType
@@ -301,4 +301,4 @@ if __name__ == "__main__":
     plt.imshow(np.transpose(vutils.make_grid(real_batch[0].to(device)[:4], padding=2, normalize=True).cpu(),(1,2,0)))
     testing = False
     GIF = True
-    main(testing, GIF,imageType)
+    main(testing, GIF,str(imageType))
