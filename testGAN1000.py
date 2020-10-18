@@ -206,9 +206,10 @@ def main(testing=False, GIF = False):
                 
                 fig1, ax1 = plt.subplots()
                 ax1.axis("off")
-                ax1.imshow(np.transpose(vutils.make_grid(fake[0], normalize=True),(1,2,0)))
                 
-                fig1.savefig("GeneratedImages/GAN/GAUSSIAN/fake_e_"+str(epoch)+"_"+str(iters) +".png")
+                ax1.imshow(np.transpose(vutils.make_grid(fake[0], normalize=True),(1,2,0)), aspect = 'normal')
+                
+                fig1.savefig("GeneratedImages/GAN/GAUSSIAN/fake_e_"+str(epoch)+"_"+str(iters) +".png", dpi=1)
                 
             # Check how the generator is doing by saving G's output on fixed_noise
             if (iters % 500 == 0) or ((epoch == num_epochs-1) and (i == len(dataloader)-1)):
