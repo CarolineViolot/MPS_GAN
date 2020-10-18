@@ -218,7 +218,8 @@ def main(imageType, testing=False, GIF = False):
                 ax.set_axis_off()
                 fig.add_axes(ax)
                 ax.imshow(arr)
-                plt.savefig("GeneratedImages/GAN/"+ imageType+ "/fake_e_"+str(epoch)+"_"+str(iters) +".png", dpi=dpi)
+                print(imageType)
+                plt.savefig("GeneratedImages/GAN/"+ str(imageType)+ "/fake_e_"+str(epoch)+"_"+str(iters) +".png", dpi=dpi)
                             
             # Check how the generator is doing by saving G's output on fixed_noise
             if (iters % 500 == 0) or ((epoch == num_epochs-1) and (i == len(dataloader)-1)):
@@ -229,13 +230,7 @@ def main(imageType, testing=False, GIF = False):
             iters += 1
             
            
-            # Plot the fake images from the last epoch
-        plt.subplot(1,2,2)
-        plt.axis("off")
-        plt.title("Fake Images")
-        plt.imshow(np.transpose(img_list[-1],(1,2,0)))
-        plt.show()
-        plt.savefig("Fake_images_"+str(epoch)+".png")
+       
     
     
     
