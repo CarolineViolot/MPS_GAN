@@ -208,7 +208,7 @@ def main(testing=False, GIF = False):
                 ax1.axis("off")
                 
                 print(np.transpose(vutils.make_grid(fake[0], normalize=True),(1,2,0)).size())
-                fig1.savefig("GeneratedImages/GAN/GAUSSIAN/fake_e_"+str(epoch)+"_"+str(iters) +".png")
+                fig1.savefig("GeneratedImages/GAN/STONE/fake_e_"+str(epoch)+"_"+str(iters) +".png")
                 """
                 arr = np.transpose(vutils.make_grid(fake[0], normalize=True),(1,2,0))
                 dpi = 96
@@ -280,7 +280,7 @@ if __name__ == "__main__":
     dataset = dset.ImageFolder(root=dataroot,
                                transform=transforms.Compose([
                                    transforms.Resize(image_size),
-                                   transforms.CenterCrop(image_size),
+                                   transforms.CenterCropx(image_size),
                                    transforms.ToTensor(),
                                    transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5)),
                                ]))
