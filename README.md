@@ -10,3 +10,6 @@ image analysis an remote sensing. The fundamental GAN architecture consists of t
 **2. Multiple-Point Statistical (MPS) resampling techniques**, which aims at generating realistic images by randomly sampling a training dataset and forming new data patterns. Simulated with an iterative workflow, the output images preserve complex spatial features and statistical relations that characterize natural processes, avoiding the formulation of complex probabilistic models.
 
 # Report 
+
+https://www.overleaf.com/read/qvmvpbcwgjzz
+
