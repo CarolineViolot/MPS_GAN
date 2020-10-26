@@ -19,18 +19,6 @@ except ImportError:
 #import matplotlib.patches as ptc
 
 #%% FUNCTIONS NEEDED 
-# sample covariance function (isotrope)
-
-def im_cov(im): # image isotrope covariance function based on fft
-    cov=np.real(fft.fftshift(fft.ifft2(np.absolute(fft.fft2(im))**2)))/im.size
-    print(cov.shape)
-    cov1=cov[int(np.shape(cov)[0]/2+0.5),int(np.shape(cov)[1]/2):]
-    cov2=np.flip(cov[int(np.shape(cov)[0]/2+0.5),:int(np.shape(cov)[1]/2+0.5)])
-    cov3=cov[int(np.shape(cov)[1]/2):,int(np.shape(cov)[0]/2+0.5)]
-    cov4=np.flip(cov[:int(np.shape(cov)[1]/2+0.5),int(np.shape(cov)[0]/2+0.5)])
-    cov=(cov1+cov2+cov3+cov4)/4
-    lags=np.arange(np.shape(cov)[0])+0.5
-    return lags, cov # x and y of the cov function   
 
 # kmeans classification for singl/multiband images
 
@@ -125,72 +113,84 @@ def create_dataset(file_path):
 #% 1) HISTOGRAM
 
 # fake series of 10 simulations, replace with your images generated with MPS/GAN
-print("Simulation shape : ", sim[:, :, None].shape)
-#rsim=np.repeat(sim[:, :, None],10,axis=2)
+#print("Simulation shape : ", sim[:, :, None].shape)
+rsim=np.repeat(sim[:, :, None],10,axis=2)
 #print(rsim.shape)
 
 #rsim = generated_images[0:400].reshape(64,64,400)
 
-#rsim=rsim#+np.random.rand(np.shape(rsim)[0],np.shape(rsim)[1],np.shape(rsim)[2])
+rsim=rsim+np.random.rand(np.shape(rsim)[0],np.shape(rsim)[1],np.shape(rsim)[2])
+
 #%%
 #histogram comparison
-generated_images = create_dataset('../GeneratedImages/GAN/Stone/NICE/*.png')
-generated_images = generated_images[:10].reshape(64,64,10)
 
-real_images = create_dataset('../Datasets/Stone/Images/*.png')
+#selection of generated images at the end of the training ('good images')
+generated_images = create_dataset('../GeneratedImages/GAN/Gaussian64x64/NICE/*.png')[:10]#.reshape(64,64,10)
+print(generated_images.shape)
+real_images = create_dataset('../Datasets/Gaussian64x64/Images/image10*.png')[:10]
 
-real_image_mean = real_images[0]/10
-for i in range (1, 10): 
-    real_image_mean = real_image_mean+ real_images[i]/10
-yref,x=np.histogram(real_image_mean.ravel())
+#%%
+
+yref,x=np.histogram(real_images[0].ravel())
 x=(x[:-1]+x[1:])/2
+#plt.plot(x, yref)
+
+#plt.hist(real_images[0].ravel())
+y, x = np.histogram(generated_images[0].ravel())
+x=(x[:-1]+x[1:])/2
+plt.plot(x, y)
+print(np.shape(real_images[0].ravel()))
+print(np.shape(generated_images[0].ravel()))
+print(np.shape(generated_images[0]))
+print(np.shape(real_images[0]))
+#%%
+#real_image_mean = real_images[0]/10
+#for i in range (1, 10): 
+#real_image_mean = real_image_mean+real_images[i]/10
+
+plt.figure(1)
+plt.imshow(generated_images[0].squeeze())
+plt.figure(2)
+plt.imshow(real_images[0].squeeze())
+
+yref,x=np.histogram(real_images[1].ravel())
+x=(x[:-1]+x[1:])/2
+
+
 y=np.zeros((len(x),np.shape(generated_images)[2]))
 
-for i in range(np.shape(generated_images)[2]):
-    y[:,i],xtmp=np.histogram(generated_images[:,:,i])#.ravel())
-    
+for i in range(0, 10):
+    #print(i)
+    y[:,i],xtmp=np.histogram(generated_images[i])#.ravel())
+    print(y[:,i])
+
 plt.figure()
 plt.boxplot(np.rot90(y),positions=x,manage_ticks=False, widths=0.05)
+
+plt.plot(x, np.mean(y, 1))
 plt.plot(x,yref,"-o",label="reference")
 plt.xlim((0, 1))
 plt.legend()
 plt.show()
 
-#%% 2) SAMPLE COVARIANCE
-# retrive central line from kernel, used to generate th ref fields, as theoretical covariance function
-cov_ref=np.copy(kernel[int(np.shape(kernel)[0]/2+0.5),int(np.shape(kernel)[1]/2+1):])
-# and its lags
-lags_ref=np.arange(np.shape(cov_ref)[0])+0.5
-
-# sample covariance, to compute on fields simulated using MPS/GAN, 
-# here we compute it on the ref field, 
-# you can show both theoretical and sample covariance for reference fields
-
-lags_real,cov_real=im_cov(real_images[0])
-lags_generated, cov_generated = im_cov(generated_images[0])
-# plot
-plt.figure()
-plt.plot(lags_real,cov_real,label="covariance of real image") # sample covariance
-plt.plot(lags_generated,cov_generated,label="covariance of generated image") # kernel
-plt.legend()
-plt.show()
-
-
 #%% 3) Kmeans classification conncetivity (5 classes)
-ncl=15 #number of classes
+ncl=10 #number of classes
 sim_km=imkm(real_images[0].squeeze()[:,:,None],ncl) # kmeans classification of the reference image
 plt.figure() # show classification
 plt.imshow(sim_km)
 plt.show()
 
 rsim = generated_images
+plt.figure()
+plt.imshow(generated_images[9].squeeze())
 # connectivity measure
 sim_kmcc=conn(sim_km) # connectivity measure for each class (probability of pixels to be connceted)
 x=np.arange(ncl) # number of classes on the x axis
 # km connectivity for all simulations (rsim matrix)
 y=np.zeros((len(x),np.shape(rsim)[2]))
-for i in range(np.shape(rsim)[2]):
-    imtmp=np.squeeze(rsim[:,:,i])
+for i in range(np.shape(rsim)[0]):
+    imtmp=np.squeeze(rsim[i].squeeze())
+    print(imtmp.shape)
     rsim_km=imkm(imtmp[:,:,None],ncl)
     y[:,i]=conn(rsim_km)
     print(i,"/",np.shape(rsim)[2]-1)
