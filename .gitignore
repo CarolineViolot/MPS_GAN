@@ -1,3 +1,4 @@
 # images in Stone folder (to big)
 Datasets/Stone/Images/*.png
 Datasets/Strebelle/Images/*.png
+GeneratedImages/*.gif
