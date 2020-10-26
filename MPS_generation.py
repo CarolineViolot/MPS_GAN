@@ -16,7 +16,7 @@ import numpy as np
 from g2s import run as g2s
 
 #%% IMPORT TRAINING IMAGE
-ti = np.array(Image.open('Datasets/Stone/Images/sim_2.png').convert('L').resize((64,64)))
+ti = np.array(Image.open('Datasets/Strebelle/Images/sim_2.png').convert('L').resize((64,64)))
 #ti = np.array(Image.open('stone.png'))
 plt.imshow(ti)
 print(ti.shape)
@@ -36,7 +36,7 @@ ki = np.power(2,kernel)
 
 s = 100 # initial random seed
 jb = 4 # number of parallel jobs
-nr = 4 # number of realizations
+nr = 10 # number of realizations
 
 #%% LAUNCH SIMULATION
 # IMPORTANT: before launching the sim, start the server from the G2S folder: ~/lib/G2S/build/c++-build$ ./server
@@ -75,4 +75,16 @@ plt.hist(ti.ravel(),alpha=.50,bins=50,label="ti")
 plt.legend()
 plt.title("image histogram")
 #%%
-plt.imsave('generated_images/MPS/qs_simulation1.png', qssim[:,:,0], cmap='gray')
+#plt.imsave('generated_images/MPS/qs_simulation1.png', qssim[:,:,0], cmap='gray')
+for i in range (0,10):
+    arr = qssim[:,:,i]
+    dpi = 96
+    fig = plt.figure(frameon=False)
+    fig.set_size_inches(arr.shape[1]/dpi, arr.shape[0]/dpi)
+    ax = plt.Axes(fig, [0., 0., 1., 1.])
+    ax.set_axis_off()
+    fig.add_axes(ax)
+    ax.imshow(arr)
+      
+    plt.savefig("GeneratedImages/MPS/Stone/image"+ str(i) +".png", dpi=dpi)
+            

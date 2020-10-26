@@ -56,7 +56,7 @@ def cov_func(im,dlag,n,toplag,lagseq="lin"): # takes univariate image/time serie
 
 #%% IMPORT TRAINING IMAGE
 ti_r = np.array(ImageOps.grayscale(Image.open('../Datasets/Gaussian64x64/Images/image1.png')))
-ti_g = np.array(ImageOps.grayscale(Image.open('../GeneratedImages/GAN/Gaussian64x64/NICE/fake_e_3_920.png')))
+ti_g = np.array(ImageOps.grayscale(Image.open('../GeneratedImages/GAN/Gaussian64x64/NICE/fake_e_3_560.png')))
 
 plt.figure()
 plt.imshow(ti_r)
@@ -66,9 +66,9 @@ plt.figure()
 plt.imshow(ti_g)
 plt.title("Generated Image")
 #%% COMPUTE SAMPLE COVARIANCE FUNCTION
-dlag=10 # compute a value every 10-pixel lag (interpolated in between), increase for speed, decrease for precision
+dlag=1 # compute a value every 10-pixel lag (interpolated in between), increase for speed, decrease for precision
 toplag=40 # last value to compute, usually not larger than half the image
-npoints=500 # number of random points to use in the image, decrease for speed, incrase for stability
+npoints=1000 # number of random points to use in the image, decrease for speed, increase for stability
 #lags,c=cov_func(ti,dlag,npoints,toplag,lagseq="lin") # gives (lag-covf) point couples
 
 #plot
@@ -84,6 +84,8 @@ for i in range(0,3):
     plt.title('Image Covariance')
 
 #%% IMPORT TRAINING IMAGE
+
+
 ti_r = np.array(ImageOps.grayscale(Image.open('../Datasets/Gaussian64x64/Images/image1.png')))
 ti_g = np.array(ImageOps.grayscale(Image.open('../GeneratedImages/GAN/Gaussian64x64/NICE/fake_e_3_920.png')))
 
@@ -95,8 +97,8 @@ plt.figure()
 plt.imshow(ti_g)
 plt.title("Generated Image")
 #%% COMPUTE SAMPLE COVARIANCE FUNCTION
-dlag=10 # compute a value every 10-pixel lag (interpolated in between), increase for speed, decrease for precision
-toplag=40 # last value to compute, usually not larger than half the image
+dlag=1 # compute a value every 10-pixel lag (interpolated in between), increase for speed, decrease for precision
+toplag=30 # last value to compute, usually not larger than half the image
 npoints=1000 # number of random points to use in the image, decrease for speed, incrase for stability
 
 plt.figure()
@@ -105,10 +107,10 @@ lags_g,c_g=cov_func(ti_g,dlag,npoints,toplag,lagseq="lin") # gives (lag-covf) po
 plt.plot(lags_r,c_r, 'b', label = 'real images')
 plt.plot(lags_g, c_g, 'r', label = 'generated images')
 
-
-image_names = ['fake_e_3_540.png', 'fake_e_3_560.png', 'fake_e_3_580.png']    
+datapath = '../GeneratedImages/MPS/Gaussian64x64/'
+image_names = ['image1.png', 'image2.png', 'image3.png']    
 for i in range(1,3):
-    ti_g = np.array(ImageOps.grayscale(Image.open('../GeneratedImages/GAN/Gaussian64x64/NICE/'+image_names[i])))
+    ti_g = np.array(ImageOps.grayscale(Image.open(datapath+image_names[i])))
     ti_r = np.array(ImageOps.grayscale(Image.open('../Datasets/Gaussian64x64/Images/image'+str(i)+'.png')))
 
     lags_r,c_r=cov_func(ti_r,dlag,npoints,toplag,lagseq="lin") # gives (lag-covf) point couples

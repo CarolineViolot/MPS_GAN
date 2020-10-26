@@ -2,7 +2,7 @@
 from PIL import Image
 import os, sys
 
-path = "Datasets/stone_256/"
+path = "../GeneratedImages/MPS/Gaussian64x64/"
 dirs = os.listdir( path )
 
 def resize():

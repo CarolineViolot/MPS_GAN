@@ -134,11 +134,11 @@ print("Simulation shape : ", sim[:, :, None].shape)
 #rsim=rsim#+np.random.rand(np.shape(rsim)[0],np.shape(rsim)[1],np.shape(rsim)[2])
 #%%
 #histogram comparison
-generated_images = create_dataset('../GeneratedImages/GAN/Stone/NICE/*.png')
+generated_images = create_dataset('../GeneratedImages/GAN/Gaussian64x64/NICE/*.png')
 generated_images = generated_images[:10].reshape(64,64,10)
-
-real_images = create_dataset('../Datasets/Stone/Images/*.png')
-
+#%%
+real_images = create_dataset('../Datasets/Gaussian64x64/Images/*.png')
+#%%
 real_image_mean = real_images[0]/10
 for i in range (1, 10): 
     real_image_mean = real_image_mean+ real_images[i]/10
@@ -176,9 +176,52 @@ plt.legend()
 plt.show()
 
 
+# #%% 3) Kmeans classification conncetivity (5 classes)
+# ncl=15 #number of classes
+# sim_km=imkm(real_images[0].squeeze()[:,:,None],ncl) # kmeans classification of the reference image
+# plt.figure() # show classification
+# plt.imshow(sim_km)
+# plt.show()
+
+# rsim = generated_images
+# # connectivity measure
+# sim_kmcc=conn(sim_km) # connectivity measure for each class (probability of pixels to be connceted)
+# x=np.arange(ncl) # number of classes on the x axis
+# # km connectivity for all simulations (rsim matrix)
+# y=np.zeros((len(x),np.shape(rsim)[2]))
+# for i in range(np.shape(rsim)[2]):
+#     imtmp=np.squeeze(rsim[:,:,i])
+#     rsim_km=imkm(imtmp[:,:,None],ncl)
+#     y[:,i]=conn(rsim_km)
+#     print(i,"/",np.shape(rsim)[2]-1)
+ 
+# #rsim_km = imkm(generated_images[0].squeeze()[:,:,None],ncl)
+# #% show conncetivity for all classes, reference image, and one simulation 
+# plt.figure(figsize=(8,3))
+# plt.subplot(1,3,1)
+# plt.boxplot(np.rot90(y),positions=x,manage_ticks=False)
+# plt.plot(x,sim_kmcc,"-o",label="reference")
+# plt.xlabel("classes")
+# plt.ylabel("conncetivity [0-1]")
+# plt.legend()
+# plt.subplot(1,3,2)
+# plt.imshow(sim_km)
+# plt.colorbar()
+# plt.title("reference")
+# plt.subplot(1,3,3)
+# plt.imshow(rsim_km)
+# plt.colorbar()
+# plt.title("one simulation")
+# plt.tight_layout()
+# plt.show()
+
 #%% 3) Kmeans classification conncetivity (5 classes)
-ncl=15 #number of classes
-sim_km=imkm(real_images[0].squeeze()[:,:,None],ncl) # kmeans classification of the reference image
+generated_images = create_dataset('../GeneratedImages/GAN/Gaussian64x64/NICE/*.png')
+#generated_images = create_dataset('../GeneratedImages/MPS/Gaussian64x64/*.png')
+generated_images = generated_images[:10]
+
+ncl=7 #number of classes
+sim_km=imkm(real_images[1].squeeze()[:,:,None],ncl) # kmeans classification of the reference image
 plt.figure() # show classification
 plt.imshow(sim_km)
 plt.show()
@@ -188,9 +231,9 @@ rsim = generated_images
 sim_kmcc=conn(sim_km) # connectivity measure for each class (probability of pixels to be connceted)
 x=np.arange(ncl) # number of classes on the x axis
 # km connectivity for all simulations (rsim matrix)
-y=np.zeros((len(x),np.shape(rsim)[2]))
-for i in range(np.shape(rsim)[2]):
-    imtmp=np.squeeze(rsim[:,:,i])
+y=np.zeros((len(x),np.shape(rsim)[0]))
+for i in range(np.shape(rsim)[0]):
+    imtmp=np.squeeze(rsim[i])
     rsim_km=imkm(imtmp[:,:,None],ncl)
     y[:,i]=conn(rsim_km)
     print(i,"/",np.shape(rsim)[2]-1)
@@ -199,7 +242,7 @@ for i in range(np.shape(rsim)[2]):
 #% show conncetivity for all classes, reference image, and one simulation 
 plt.figure(figsize=(8,3))
 plt.subplot(1,3,1)
-plt.boxplot(np.rot90(y),positions=x,manage_ticks=False)
+plt.boxplot(np.rot90(y),positions=x)#,manage_ticks=False)
 plt.plot(x,sim_kmcc,"-o",label="reference")
 plt.xlabel("classes")
 plt.ylabel("conncetivity [0-1]")
