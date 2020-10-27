@@ -25,7 +25,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 from IPython.display import HTML
-
+import time
 
 
 def weights_init(m):
@@ -94,7 +94,7 @@ class  Discriminator(nn.Module):
 	def forward(self, input):
 		return self.main(input)
 
-def main(imageType, testing=False, GIF = False):
+def main(imageType, testing=False, newImageGeneration = False):
     #create generator
     netG = Generator(ngpu).to(device)
     netD = Discriminator(ngpu).to(device)
@@ -133,6 +133,7 @@ def main(imageType, testing=False, GIF = False):
     
     
     print("Starting Training Loop...")
+    t = time.time()
     # For each epoch
     for epoch in range(num_epochs):
         iters = 0
@@ -199,7 +200,7 @@ def main(imageType, testing=False, GIF = False):
             G_losses.append(errG.item())
             D_losses.append(errD.item())
             
-            if GIF and (iters % 20 == 0):
+            if newImageGeneration and (iters % 20 == 0):
                 with torch.no_grad():
                     fake = netG(fixed_noise).detach().cpu()
                     
@@ -228,6 +229,13 @@ def main(imageType, testing=False, GIF = False):
                 img_list.append(vutils.make_grid(fake, padding=2, normalize=True))
     
             iters += 1
+    print("training time : " + str(time.time() - t))
+    t = time.time()
+    for i in range (0,100):
+        with torch.no_grad():
+            fake = netG(fixed_noise).detach().cpu()
+                  
+    print("generation of 100 fakes :" + str(time.time() - t))
             
            
        
@@ -295,5 +303,5 @@ if __name__ == "__main__":
     plt.title("Training Images")
     plt.imshow(np.transpose(vutils.make_grid(real_batch[0].to(device)[:4], padding=2, normalize=True).cpu(),(1,2,0)))
     testing = False
-    GIF = True
-    main(str(imageType),testing, GIF)
+    newImageGeneration = True
+    main(str(imageType),testing, newImageGeneration)
