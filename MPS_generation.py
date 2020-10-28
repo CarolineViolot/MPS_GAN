@@ -14,9 +14,10 @@ import matplotlib.pyplot as plt
 import numpy as np
 #import math
 from g2s import run as g2s
+import time
 
 #%% IMPORT TRAINING IMAGE
-ti = np.array(Image.open('Datasets/Strebelle/Images/sim_2.png').convert('L').resize((64,64)))
+ti = np.array(Image.open('Datasets/Strebelle/Images/sim_1.png').convert('L').resize((64,64)))
 #ti = np.array(Image.open('stone.png'))
 plt.imshow(ti)
 print(ti.shape)
@@ -36,17 +37,20 @@ ki = np.power(2,kernel)
 
 s = 100 # initial random seed
 jb = 4 # number of parallel jobs
-nr = 10 # number of realizations
+nr = 100 # number of realizations
 
 #%% LAUNCH SIMULATION
 # IMPORTANT: before launching the sim, start the server from the G2S folder: ~/lib/G2S/build/c++-build$ ./server
 
 qssim=np.empty(np.hstack([np.shape(di),nr]))*np.nan   
-#plt.figure(figsize=(4,4))
+plt.figure(figsize=(4,4))
+t = time.time()
 for i in range(nr):
     s=s+1
     print("realization " + str(i))
     simout=g2s('-sa',serverAddress,'-a','qs','-ti',ti,'-di',di,'-dt',dt,'-ki',ki,'-k', k,'-n', n,'-s', s, '-j',jb);
+
+    """
     qssim[:,:,i]=simout[0]
     #plt.subplot(4,4,i+1)
     plt.figure()
@@ -54,7 +58,8 @@ for i in range(nr):
     plt.axis('off')
     plt.tight_layout()    
     #plt.savefig('GeneratedImages/MPS/gaussian'+str(i)+'.png')
-    
+    """
+print("time needed : " + str(time.time() - t))
 #plt.tight_layout()    
 #plt.savefig('generated_images/MPS/QS28.png')
 
@@ -84,7 +89,7 @@ for i in range (0,10):
     ax = plt.Axes(fig, [0., 0., 1., 1.])
     ax.set_axis_off()
     fig.add_axes(ax)
-    ax.imshow(arr)
+    ax.imshow(arr,cmap='gray')
       
-    plt.savefig("GeneratedImages/MPS/Stone/image"+ str(i) +".png", dpi=dpi)
+    plt.savefig("GeneratedImages/MPS/Strebelle/image"+ str(i) +".png", dpi=dpi)
             
