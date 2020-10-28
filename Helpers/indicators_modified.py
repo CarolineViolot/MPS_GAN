@@ -125,9 +125,12 @@ rsim=rsim+np.random.rand(np.shape(rsim)[0],np.shape(rsim)[1],np.shape(rsim)[2])
 #histogram comparison
 
 #selection of generated images at the end of the training ('good images')
-generated_images = create_dataset('../GeneratedImages/GAN/Gaussian64x64/NICE/*.png')[:10]#.reshape(64,64,10)
+# generated_images = create_dataset('../GeneratedImages/GAN/Gaussian64x64/NICE/*.png')[:10]#.reshape(64,64,10)
+# print(generated_images.shape)
+# real_images = create_dataset('../Datasets/Gaussian64x64/Images/image10*.png')[:10]
+generated_images = create_dataset('../GeneratedImages/GAN/Strebelle/NICE/*.png')[:10]#.reshape(64,64,10)
 print(generated_images.shape)
-real_images = create_dataset('../Datasets/Gaussian64x64/Images/image10*.png')[:10]
+real_images = create_dataset('../Datasets/Strebelle/Images/*.png')[:10]
 
 #%%
 
@@ -174,7 +177,7 @@ plt.legend()
 plt.show()
 
 #%% 3) Kmeans classification conncetivity (5 classes)
-ncl=10 #number of classes
+ncl=2 #number of classes
 sim_km=imkm(real_images[0].squeeze()[:,:,None],ncl) # kmeans classification of the reference image
 plt.figure() # show classification
 plt.imshow(sim_km)

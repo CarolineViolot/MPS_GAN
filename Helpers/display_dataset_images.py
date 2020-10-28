@@ -10,8 +10,10 @@ from PIL import Image
 import os, sys
 import matplotlib.pyplot as plt
 import numpy as np
-path = "../GeneratedImages/MPS/Stone/"
-dirs = os.listdir( path )
+path = "../GeneratedImages/GAN/Gaussian64x64/NICE/"
+dirs = os.listdir(path)
+
+plt.gray()
 
 def create_dataset_images(image_grid_rows, image_grid_columns):
     # Set image grid
@@ -27,7 +29,7 @@ def create_dataset_images(image_grid_rows, image_grid_columns):
             im.append(np.array(Image.open(path+item)))
             print((np.array(Image.open(path+item))).shape)
            
-    
+    plt.gray()
     fig, axs = plt.subplots(image_grid_rows,
                             image_grid_columns,
                             figsize=(4, 4),
@@ -38,10 +40,13 @@ def create_dataset_images(image_grid_rows, image_grid_columns):
     for i in range(image_grid_rows):
         for j in range(image_grid_columns):
             # Output a grid of images
-            axs[i, j].imshow(im[cnt], cmap='gray')
+            axs[i, j].imshow(im[cnt], cmap=plt.get_cmap('gray'), vmin=0, vmax=255)
             axs[i, j].axis('off')
+            
             cnt += 1
-    fig.tight_layout()
+    
+    #fig.tight_layout()
+    fig.tight_layout(pad=0.1, w_pad=0.1, h_pad=0.5)
     
 
-create_dataset_images(2, 2)
+create_dataset_images(4, 4)

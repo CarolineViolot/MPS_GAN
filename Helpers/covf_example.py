@@ -139,6 +139,25 @@ plt.figure()
 plt.imshow(ti_g)
 plt.title("Generated Image")
 #%% COMPUTE SAMPLE COVARIANCE FUNCTION
+
+imagetype = 'Strebelle'
+generativeMethod = 'MPS'
+
+genImagepath = ''
+images_names = []
+
+if generativeMethod == 'MPS':
+    genImagepath = '../GeneratedImages/MPS/'+imagetype+'/'
+    images_names = ['image1.png','image2.png','image3.png']
+elif generativeMethod == 'GAN':
+    genImagepath = '../GeneratedImages/GAN/'+imagetype+'/NICE/'
+    if imagetype == 'Gaussian64x64':
+        images_names = ['fake_e_4_540.png', 'fake_e_4_560.png', 'fake_e_4_580.png']    
+    if imagetype == 'Stone':
+        images_names = ['fake_e_4_500.png', 'fake_e_4_520.png', 'fake_e_4_540.png']
+    if imagetype == 'Strebelle':
+        images_names = ['fake_e_1_8980.png', 'fake_e_1_8720.png', 'fake_e_1_8560.png']
+
 dlag=10 # compute a value every 10-pixel lag (interpolated in between), increase for speed, decrease for precision
 toplag=40 # last value to compute, usually not larger than half the image
 npoints=500 # number of random points to use in the image, decrease for speed, incrase for stability
@@ -148,11 +167,12 @@ lags_r,c_r=cov_func(ti_r,dlag,npoints,toplag,lagseq="lin") # gives (lag-covf) po
 lags_g,c_g=cov_func(ti_g,dlag,npoints,toplag,lagseq="lin") # gives (lag-covf) point couples
 plt.plot(lags_r,c_r, 'b', label = 'real images')
 plt.plot(lags_g, c_g, 'r', label = 'generated images')
-
-image_names = ['fake_e_4_500.png', 'fake_e_4_520.png', 'fake_e_4_540.png']    
-for i in range(1,3):
-    ti_g = np.array(ImageOps.grayscale(Image.open('../GeneratedImages/GAN/Stone/NICE/'+image_names[i])))
-    ti_r = np.array(ImageOps.grayscale(Image.open('../Datasets/Stone/Images/sim_'+str(i)+'.png')))
+print(images_names)
+    
+for i in range(0,3):
+    print(images_names[i])
+    ti_g = np.array(ImageOps.grayscale(Image.open(genImagepath+images_names[i])))
+    ti_r = np.array(ImageOps.grayscale(Image.open('../Datasets/'+imagetype+'/Images/sim_'+str(1)+'.png')))
 
     lags_r,c_r=cov_func(ti_r,dlag,npoints,toplag,lagseq="lin") # gives (lag-covf) point couples
     lags_g,c_g=cov_func(ti_g,dlag,npoints,toplag,lagseq="lin") # gives (lag-covf) point couples

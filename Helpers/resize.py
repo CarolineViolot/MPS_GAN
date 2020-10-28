@@ -2,7 +2,7 @@
 from PIL import Image
 import os, sys
 
-path = "../GeneratedImages/MPS/Gaussian64x64/"
+path = "../Datasets/Strebelle/"
 dirs = os.listdir( path )
 
 def resize():

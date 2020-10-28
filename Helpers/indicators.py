@@ -134,15 +134,16 @@ print("Simulation shape : ", sim[:, :, None].shape)
 #rsim=rsim#+np.random.rand(np.shape(rsim)[0],np.shape(rsim)[1],np.shape(rsim)[2])
 #%%
 #histogram comparison
-generated_images = create_dataset('../GeneratedImages/GAN/Gaussian64x64/NICE/*.png')
+generated_images = create_dataset('../GeneratedImages/MPS/Stone/*.png')
 generated_images = generated_images[:10].reshape(64,64,10)
 #%%
-real_images = create_dataset('../Datasets/Gaussian64x64/Images/*.png')
+real_images = create_dataset('../Datasets/Stone/Images/*.png')
 #%%
-real_image_mean = real_images[0]/10
-for i in range (1, 10): 
-    real_image_mean = real_image_mean+ real_images[i]/10
+real_image_mean = real_images[0]/2
+for i in range (1, 2): 
+    real_image_mean = real_image_mean+ real_images[i]/2
 yref,x=np.histogram(real_image_mean.ravel())
+#yref,x=np.histogram(real_images[0].ravel())#)_mean.ravel())
 x=(x[:-1]+x[1:])/2
 y=np.zeros((len(x),np.shape(generated_images)[2]))
 
@@ -216,12 +217,21 @@ plt.show()
 # plt.show()
 
 #%% 3) Kmeans classification conncetivity (5 classes)
-generated_images = create_dataset('../GeneratedImages/GAN/Gaussian64x64/NICE/*.png')
+
+#generated_images = create_dataset('../GeneratedImages/GAN/Gaussian64x64/NICE/*.png')
 #generated_images = create_dataset('../GeneratedImages/MPS/Gaussian64x64/*.png')
+#generated_images = create_dataset('../GeneratedImages/GAN/Stone/NICE/*.png')
+#generated_images = create_dataset('../GeneratedImages/MPS/Stone/*.png')
+#generated_images = create_dataset('../GeneratedImages/GAN/Strebelle/NICE/*.png')
+generated_images = create_dataset('../GeneratedImages/MPS/Strebelle/*.png')
 generated_images = generated_images[:10]
 
-ncl=7 #number of classes
-sim_km=imkm(real_images[1].squeeze()[:,:,None],ncl) # kmeans classification of the reference image
+#%%
+real_images = create_dataset('../Datasets/Strebelle/Images/*.png')
+
+#%%
+ncl=3 #number of classes
+sim_km=imkm(real_images[0].squeeze()[:,:,None],ncl) # kmeans classification of the reference image
 plt.figure() # show classification
 plt.imshow(sim_km)
 plt.show()
