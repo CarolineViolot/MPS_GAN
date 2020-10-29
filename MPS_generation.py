@@ -17,6 +17,7 @@ from g2s import run as g2s
 import time
 
 #%% IMPORT TRAINING IMAGE
+#rezising is not necessary as the dataset images have normally already been resized to 64x64 pixels
 ti = np.array(Image.open('Datasets/Strebelle/Images/sim_1.png').convert('L').resize((64,64)))
 #ti = np.array(Image.open('stone.png'))
 plt.imshow(ti)
